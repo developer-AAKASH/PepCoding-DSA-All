@@ -4,16 +4,23 @@ using namespace std;
 
 void pGetAllTargetSumSequence( int currentIndex, int currentSum, const int targetSum, vector< int > resultSoFar, vector< vector< int > > &result, vector< int > &nums ){
     
+    cout << endl << currentIndex << " " << currentSum << endl;
+
     int size = nums.size();
 
     // Negative base-cases...
-    if( currentIndex >= size ){
+    if( currentSum > targetSum ){
+        cout << endl << "greater current sum...." << currentSum;
         return;
     }
 
-    if( currentSum > targetSum ){
+    if( currentIndex == size ){
+        if( currentSum == targetSum ){
+            result.push_back( resultSoFar );
+        }
         return;
     }
+
 
     // Positive base case
     if( currentSum == targetSum ){
@@ -22,11 +29,13 @@ void pGetAllTargetSumSequence( int currentIndex, int currentSum, const int targe
     }
 
     // include...
+    cout << endl << "include...";
     resultSoFar.push_back( nums[ currentIndex ] );
     pGetAllTargetSumSequence( currentIndex + 1, currentSum + nums[ currentIndex ], targetSum, resultSoFar, result, nums );
-    result.pop_back();
+    resultSoFar.pop_back();
 
     // exclude...
+    cout << endl << "exclude...";
     pGetAllTargetSumSequence( currentIndex + 1, currentSum, targetSum, resultSoFar, result, nums );
 
 }
@@ -43,11 +52,13 @@ int main(){
         cin >> nums[i];
     }
 
-    // flush
+    cout << flush;
 
     cout << "Enter target-sum: " << endl;
-    int targetSum;
+    int targetSum = 0;
     cin >> targetSum;
+
+    cout << endl << "after taking target-sum.." << endl;
 
     vector< int > resultSoFar;
     vector< vector< int > > result;
